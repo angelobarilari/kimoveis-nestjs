@@ -15,15 +15,32 @@ export class UsersService {
     ) {}
     
     async createUser(data: CreateUserDto): Promise<User> {
-        const newUser: User = this.usersRepository.create({ ...data })
+        if (await this.findUserByEmail(data.email))
+            customException('Email is already in use', 409)
 
+        const newUser: User = this.usersRepository.create({ ...data })
+        
         await this.usersRepository.save(newUser)
 
         return newUser
     }
 
-    async findUserById(id: string): Promise<any> {
-        return await this.usersRepository.findOneBy({ id })
+    async findUserById(id: string): Promise<User> {
+        const user = await this.usersRepository.findOneBy({ id })
+
+        if (!user)
+            customException('User not found', 404)
+
+        return user
+    }
+
+    async findUserByEmail(email: string): Promise<User> {
+        const user = await this.usersRepository.findOneBy({ email })
+
+        if (!user)
+            customException('User not found', 404)
+
+        return user
     }
 
     async getAllUsers(): Promise<User[]> {

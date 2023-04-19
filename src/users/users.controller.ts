@@ -19,6 +19,13 @@ export class UsersController {
         return this.usersService.findUserById(params.id)
     }
 
+    @Get(':email')
+    findUserByEmail(
+        @Param() params: any
+    ) {
+        return this.usersService.findUserByEmail(params.email)
+    }
+
     @Post() 
     createUser(
         @Body() body: any
@@ -26,7 +33,7 @@ export class UsersController {
         return this.usersService.createUser(body)
     }
 
-    
+
 
 
 }
