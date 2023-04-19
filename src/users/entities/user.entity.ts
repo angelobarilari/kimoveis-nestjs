@@ -5,7 +5,7 @@ import { Entity,
     PrimaryGeneratedColumn,
     OneToMany } from "typeorm";
 // import { SchedulesUserProperties } from "./schedules_users_properties";
-// import { Exclude } from 'class-transformer'
+import { Exclude } from 'class-transformer'
 
 @Entity("users")
 class User {
@@ -34,7 +34,7 @@ class User {
     isActive: boolean
 
     @Column()
-    // @Exclude()
+    @Exclude()
     password: string;
 
     @CreateDateColumn()
