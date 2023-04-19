@@ -12,7 +12,7 @@ export const databaseProviders = [
         password: '1234',
         database: 'kimoveisdb',
         entities: [
-            __dirname + '/../**/*.entity{.ts,.js}',
+            __dirname + '/**/**/*.entity{.ts,.js}',
         ],
         synchronize: true,
       });
