@@ -1,21 +1,21 @@
-// import { IsBoolean, IsEmail, IsString } from "class-validator";
+import { IsBoolean, IsEmail, IsString } from "class-validator";
 
 export class CreateUserDto {
-    // @IsString()
+    @IsString()
     readonly name: string;
 
-    // @IsString()
-    // @IsEmail()
+    @IsString()
+    @IsEmail()
     readonly email: string;
 
-    // @IsBoolean()
+    @IsBoolean()
     readonly isActive: boolean;
 
-    // @IsString()
+    @IsString()
     readonly password: string;
 }
 
 export class CreateAdmDto extends CreateUserDto {
-    // @IsBoolean()
+    @IsBoolean()
     readonly isAdm: boolean;
 }
