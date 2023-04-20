@@ -5,12 +5,13 @@ import {
     Get, 
     Param, 
     Patch, 
-    Post, 
+    Post,
+    Request, 
     UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { AuthGuard } from '../auth/auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -18,8 +19,12 @@ export class UsersController {
         private readonly usersService: UsersService
     ) {}
 
+    @UseGuards(JwtAuthGuard)
     @Get()
-    findAllusers() {
+    findAllusers(
+        @Request() req: any
+    ) {
+        console.log(req.user)
         return this.usersService.getAllUsers()
     }
 

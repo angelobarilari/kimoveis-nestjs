@@ -15,12 +15,30 @@ export class AuthService {
     const user = await this.usersService.findUserByEmail(username);
 
     if (user?.password !== pass) 
-      throw new UnauthorizedException();
+      throw new UnauthorizedException()
 
-    const payload = { username: user.email, sub: user.id };
+    const payload = { username: user.email, sub: user.id }
 
     return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+      access_token: await this.jwtService.signAsync(payload)
+    }
+  }
+
+  async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.usersService.findUserByEmail(username)
+
+    if (user && user.password === pass) {
+      const { password, ...result } = user
+      return result
+    }
+
+    return null
+  }
+
+  async login(user: any) {
+    const payload = { username: user.username, sub: user.userId }
+    return {
+      access_token: this.jwtService.sign(payload)
+    }
   }
 }
