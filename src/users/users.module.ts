@@ -3,10 +3,12 @@ import { DatabaseModule } from '../database.module';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { userProviders } from './users.providers';
-import { AuthModule } from 'src/auth/auth.module';
+import { GlobalModule } from 'src/global/global.module';
 
 @Module({
-    imports: [DatabaseModule],
+    imports: [
+        DatabaseModule, 
+        GlobalModule],
     controllers: [UsersController],
     providers: [
         UsersService,

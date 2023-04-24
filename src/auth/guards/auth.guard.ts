@@ -34,8 +34,12 @@ import {
       return true;
     }
   
-    private extractTokenFromHeader(request: Request): string | undefined {
+    extractTokenFromHeader(request: Request): string | undefined {
       const [type, token] = request.headers.authorization?.split(' ') ?? [];
       return type === 'Bearer' ? token : undefined;
+    }
+
+    decodeJwt(token: string): any {
+      return this.jwtService.decode(token);
     }
   }
