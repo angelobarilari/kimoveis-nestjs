@@ -21,9 +21,7 @@ export class UsersController {
 
     @UseGuards(JwtAuthGuard)
     @Get()
-    findAllusers(
-        @Request() req: any
-    ) {
+    findAllusers() {
         return this.usersService.getAllUsers()
     }
 
