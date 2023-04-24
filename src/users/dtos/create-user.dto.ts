@@ -13,6 +13,7 @@ export class CreateUserDto {
     readonly email: string;
 
     @IsBoolean()
+    @IsOptional()
     readonly isActive: boolean;
 
     @IsBoolean()
