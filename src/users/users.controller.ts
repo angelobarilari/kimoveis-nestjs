@@ -24,10 +24,10 @@ export class UsersController {
     findAllusers(
         @Request() req: any
     ) {
-        console.log(req.user)
         return this.usersService.getAllUsers()
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(':id')
     findUserById(
         @Param() params: any
@@ -35,6 +35,7 @@ export class UsersController {
         return this.usersService.findUserById(params.id)
     }
     
+    @UseGuards(JwtAuthGuard)
     @Get(':email')
     findUserByEmail(
         @Param() params: any
@@ -49,6 +50,7 @@ export class UsersController {
         return this.usersService.createUser(body)
     }
 
+    @UseGuards(JwtAuthGuard)
     @Patch(':id')
     updateUser(
         @Param() params: any,
@@ -57,6 +59,7 @@ export class UsersController {
         return this.usersService.updateUser(params.id, body)
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete(':id')
     deleteUser(
         @Param() params: any,
