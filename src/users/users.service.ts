@@ -12,7 +12,7 @@ export class UsersService {
     constructor(
         @Inject('USERS_REPOSITORY')
         private usersRepository: Repository<User>,
-        private globalService: GlobalService,
+        private globalService: GlobalService
     ) {}
 
     async getAllUsers(): Promise<User[]> {
