@@ -1,12 +1,18 @@
-import { Inject, Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import { 
+    Inject,
+    Injectable, 
+    NestMiddleware } from '@nestjs/common';
+import { 
+    Request, 
+    Response, 
+    NextFunction } from 'express';
 import { User } from '../../users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { AuthGuard } from '../guards/auth.guard';
 import { GlobalService } from 'src/global/global.service';
 
 @Injectable()
-export class admMiddleware implements NestMiddleware {
+export class ownerOrAdmMiddleware implements NestMiddleware {
     constructor(
         private authGuard: AuthGuard,
         private globalService: GlobalService,
@@ -28,7 +34,8 @@ export class admMiddleware implements NestMiddleware {
         })
 
         if (!user.isAdm)
-            this.globalService.customException('No admin authorization', 403)
+            if (req.params.id !== decodedData.sub)
+                this.globalService.customException('No resource owner or admin authorization', 403)
 
         next()
     }
