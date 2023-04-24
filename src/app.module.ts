@@ -22,7 +22,8 @@ import { AuthController } from './auth/auth.controller';
     UsersModule, 
     AuthModule, 
     DatabaseModule, 
-    GlobalModule],
+    GlobalModule
+  ],
   controllers: [AppController],
   providers: [
     AppService,
@@ -43,10 +44,16 @@ export class AppModule implements NestModule {
 
     consumer
       .apply(admMiddleware)
-      .forRoutes({ path: 'users', method: RequestMethod.GET })
+      .forRoutes(
+        { path: 'users', method: RequestMethod.GET }
+      )
     
     consumer
       .apply(ownerOrAdmMiddleware)
-      .forRoutes({ path: 'users/:id', method: RequestMethod.GET })
+      .forRoutes(
+        { path: 'users/:id', method: RequestMethod.GET },
+        { path: 'users/:id', method: RequestMethod.PATCH },
+        { path: 'users/:id', method: RequestMethod.DELETE },
+      )
   }
 }

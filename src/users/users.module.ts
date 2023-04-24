@@ -8,7 +8,8 @@ import { GlobalModule } from 'src/global/global.module';
 @Module({
     imports: [
         DatabaseModule, 
-        GlobalModule],
+        GlobalModule
+    ],
     controllers: [UsersController],
     providers: [
         UsersService,
