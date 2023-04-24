@@ -2,14 +2,19 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { CreateCategoryDto } from './dtos/create-category.dto';
-import { GlobalService } from 'src/global/global.service';
+import { GlobalService } from '../global/global.service';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
+import { Adress } from '../adresses/entities/adress.entity';
 
 @Injectable()
 export class CategoriesService {
     constructor(
         @Inject('CATEGORIES_REPOSITORY')
         private categoriesRepository: Repository<Category>,
+
+        @Inject('ADRESSES_REPOSITORY')
+        private adressesRepository: Repository<Adress>,
+
         private globalService: GlobalService
     ) {}
 

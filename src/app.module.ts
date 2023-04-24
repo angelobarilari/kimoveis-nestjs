@@ -17,13 +17,16 @@ import { activeMiddlewareAuth } from './auth/middlewares/isActiveAuth.middleware
 import { UsersController } from './users/users.controller';
 import { AuthController } from './auth/auth.controller';
 import { CategoriesModule } from './categories/categories.module';
+import { AdressesModule } from './adresses/adresses.module';
 
 @Module({
   imports: [
     UsersModule, 
     AuthModule, 
     DatabaseModule, 
-    GlobalModule, CategoriesModule
+    GlobalModule, 
+    CategoriesModule, 
+    AdressesModule
   ],
   controllers: [AppController],
   providers: [
