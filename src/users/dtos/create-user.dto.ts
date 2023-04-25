@@ -2,14 +2,17 @@ import {
     IsBoolean, 
     IsEmail,
     IsOptional,
-    IsString } from "class-validator";
+    IsString, 
+    MaxLength} from "class-validator";
 
 export class CreateUserDto {
     @IsString()
+    @MaxLength(150)
     readonly name: string;
 
     @IsString()
     @IsEmail()
+    @MaxLength(150)
     readonly email: string;
 
     @IsBoolean()

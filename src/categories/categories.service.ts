@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { CreateCategoryDto } from './dtos/create-category.dto';
-import { GlobalService } from 'src/global/global.service';
+import { GlobalService } from '../global/global.service';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
 
 @Injectable()
@@ -10,6 +10,7 @@ export class CategoriesService {
     constructor(
         @Inject('CATEGORIES_REPOSITORY')
         private categoriesRepository: Repository<Category>,
+
         private globalService: GlobalService
     ) {}
 
@@ -18,11 +19,21 @@ export class CategoriesService {
     }
 
     async findCategoryById(id: string): Promise<Category> {
-        return await this.categoriesRepository.findOneBy({ id })
+        const category: Category = await this.categoriesRepository.findOneBy({ id }) 
+        
+        if (!category)
+            this.globalService.customException('Category not found', 404)
+
+        return category
     }
 
     async findCategoryByName(name: string): Promise<Category> {
-        return await this.categoriesRepository.findOneBy({ name })
+        const category: Category = await this.categoriesRepository.findOneBy({ name })
+
+        if (!category)
+            this.globalService.customException('Category not found', 404)
+
+        return category
     }
 
     async categoryAlreadyExist(categoryName: string): Promise<boolean> {
