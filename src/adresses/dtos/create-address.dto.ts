@@ -4,7 +4,7 @@ import {
     MaxLength, 
     MinLength} from "class-validator";
 
-export class CreateAdressDto {
+export class CreateAddressDto {
     @IsString()
     @MaxLength(100)
     readonly district: string;

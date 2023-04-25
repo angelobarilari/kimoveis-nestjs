@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { GlobalService } from '../global/global.service';
 import { Repository } from 'typeorm';
 import { Address } from './entities/address.entity';
-import { CreateAdressDto } from './dtos/create-adress.dto';
+import { CreateAddressDto } from './dtos/create-address.dto';
 
 @Injectable()
 export class AdressesService {
@@ -13,7 +13,7 @@ export class AdressesService {
         private globalService: GlobalService
     ) {}
 
-    async createAddress(data: CreateAdressDto): Promise<Address> {
+    async createAddress(data: CreateAddressDto): Promise<Address> {
         const { city, district, number, state, zipCode } = data
 
         const addressAlreadyExist = await this.adressesRepository.findOneOrFail({
