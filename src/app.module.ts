@@ -18,6 +18,7 @@ import { UsersController } from './users/users.controller';
 import { AuthController } from './auth/auth.controller';
 import { CategoriesModule } from './categories/categories.module';
 import { AdressesModule } from './adresses/adresses.module';
+import { PropertiesModule } from './properties/properties.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { AdressesModule } from './adresses/adresses.module';
     DatabaseModule, 
     GlobalModule, 
     CategoriesModule, 
-    AdressesModule
+    AdressesModule, 
+    PropertiesModule
   ],
   controllers: [AppController],
   providers: [

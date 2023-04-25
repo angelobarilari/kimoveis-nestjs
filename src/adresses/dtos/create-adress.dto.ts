@@ -1,12 +1,16 @@
 import { 
     IsOptional, 
-    IsString } from "class-validator";
+    IsString, 
+    MaxLength, 
+    MinLength} from "class-validator";
 
 export class CreateAdressDto {
     @IsString()
-    readonly distric: string;
+    @MaxLength(100)
+    readonly district: string;
 
     @IsString()
+    @MaxLength(9)
     readonly zipCode: string;
 
     @IsString()
@@ -17,6 +21,8 @@ export class CreateAdressDto {
     readonly city: string;
 
     @IsString()
+    @MinLength(2)
+    @MaxLength(2)
     readonly state: string;
 }
 

@@ -4,16 +4,12 @@ import { Category } from './entities/category.entity';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { GlobalService } from '../global/global.service';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
-import { Adress } from '../adresses/entities/adress.entity';
 
 @Injectable()
 export class CategoriesService {
     constructor(
         @Inject('CATEGORIES_REPOSITORY')
         private categoriesRepository: Repository<Category>,
-
-        @Inject('ADRESSES_REPOSITORY')
-        private adressesRepository: Repository<Adress>,
 
         private globalService: GlobalService
     ) {}
@@ -23,11 +19,21 @@ export class CategoriesService {
     }
 
     async findCategoryById(id: string): Promise<Category> {
-        return await this.categoriesRepository.findOneBy({ id })
+        const category: Category = await this.categoriesRepository.findOneBy({ id }) 
+        
+        if (!category)
+            this.globalService.customException('Category not found', 404)
+
+        return category
     }
 
     async findCategoryByName(name: string): Promise<Category> {
-        return await this.categoriesRepository.findOneBy({ name })
+        const category: Category = await this.categoriesRepository.findOneBy({ name })
+
+        if (!category)
+            this.globalService.customException('Category not found', 404)
+
+        return category
     }
 
     async categoryAlreadyExist(categoryName: string): Promise<boolean> {

@@ -4,7 +4,7 @@ import {
     PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('adresses')
-class Adress {
+class Address {
     @PrimaryGeneratedColumn("uuid")
     readonly id: string;
 
@@ -32,4 +32,4 @@ class Adress {
     state: string;
 }
 
-export { Adress }
+export { Address }
