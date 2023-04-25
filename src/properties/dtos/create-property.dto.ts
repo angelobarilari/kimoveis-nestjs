@@ -6,7 +6,7 @@ import {
     IsOptional, 
     IsString, 
     ValidateNested} from "class-validator";
-import { CreateAdressDto } from "../../adresses/dtos/create-adress.dto";
+import { CreateAddressDto } from "../../adresses/dtos/create-adress.dto";
 import { Type } from "class-transformer";
 
 export class CreatePropertyDto {
@@ -22,8 +22,8 @@ export class CreatePropertyDto {
     @IsDefined()
     @IsNotEmptyObject()
     @ValidateNested({ each: true })
-    @Type(() => CreateAdressDto)
-    address: CreateAdressDto;
+    @Type(() => CreateAddressDto)
+    address: CreateAddressDto;
 
     @IsString()
     @IsOptional()

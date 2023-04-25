@@ -8,13 +8,11 @@ import {
     NextFunction } from 'express';
 import { User } from '../../users/entities/user.entity';
 import { Repository } from 'typeorm';
-import { AuthGuard } from '../guards/auth.guard';
-import { GlobalService } from 'src/global/global.service';
+import { GlobalService } from '../../global/global.service';
 
 @Injectable()
 export class activeMiddlewareAuth implements NestMiddleware {
     constructor(
-        private authGuard: AuthGuard,
         private globalService: GlobalService,
 
         @Inject('USERS_REPOSITORY')

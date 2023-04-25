@@ -7,7 +7,7 @@ import { jwtConstants } from './constants';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { GlobalModule } from 'src/global/global.module';
+import { GlobalModule } from '../global/global.module';
 
 @Module({
   imports: [
