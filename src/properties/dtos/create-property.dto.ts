@@ -6,7 +6,7 @@ import {
     IsOptional, 
     IsString, 
     ValidateNested} from "class-validator";
-import { CreateAddressDto } from "../../adresses/dtos/create-adress.dto";
+import { CreateAddressDto } from "../../adresses/dtos/create-address.dto";
 import { Type } from "class-transformer";
 
 export class CreatePropertyDto {
