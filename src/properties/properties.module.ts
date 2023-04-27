@@ -6,10 +6,10 @@ import { propertyProviders } from './properties.providers';
 import { CategoriesModule } from '../categories/categories.module';
 import { categoryProviders } from '../categories/categories.providers';
 import { GlobalModule } from '../global/global.module';
-import { AdressesModule } from '../adresses/adresses.module';
-import { adressProviders } from '../adresses/adresses.providers';
+import { AdressesModule } from '../adresses/addresses.module';
+import { addressProviders } from '../adresses/addresses.providers';
 import { CategoriesService } from 'src/categories/categories.service';
-import { AdressesService } from '../adresses/adresses.service';
+import { AdressesService } from '../adresses/addresses.service';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { AdressesService } from '../adresses/adresses.service';
     AdressesService,
     CategoriesService,
     PropertiesService,
-    ...adressProviders,
+    ...addressProviders,
     ...categoryProviders,
     ...propertyProviders
   ],

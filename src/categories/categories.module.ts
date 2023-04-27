@@ -4,8 +4,8 @@ import { CategoriesService } from './categories.service';
 import { categoryProviders } from './categories.providers';
 import { GlobalModule } from '../global/global.module';
 import { DatabaseModule } from '../database.module';
-import { AdressesModule } from '../adresses/adresses.module';
-import { adressProviders } from '../adresses/adresses.providers';
+import { AdressesModule } from '../adresses/addresses.module';
+import { addressProviders } from '../adresses/addresses.providers';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { adressProviders } from '../adresses/adresses.providers';
   providers: [
     CategoriesService,
     ...categoryProviders,
-    ...adressProviders
+    ...addressProviders
   ]
 })
 export class CategoriesModule {}
