@@ -17,8 +17,11 @@ import { activeMiddlewareAuth } from './auth/middlewares/isActiveAuth.middleware
 import { UsersController } from './users/users.controller';
 import { AuthController } from './auth/auth.controller';
 import { CategoriesModule } from './categories/categories.module';
-import { AdressesModule } from './adresses/adresses.module';
+import { AdressesModule } from './adresses/addresses.module';
 import { PropertiesModule } from './properties/properties.module';
+import { CategoriesController } from './categories/categories.controller';
+import { PropertiesController } from './properties/properties.controller';
+import { AddressesController } from './adresses/addresses.controller';
 
 @Module({
   imports: [
@@ -46,7 +49,12 @@ export class AppModule implements NestModule {
         { path: 'users', method: RequestMethod.POST },
         'users/(.*)',
       )
-      .forRoutes(UsersController, AuthController)
+      .forRoutes(
+        UsersController, 
+        AuthController,
+        CategoriesController,
+        PropertiesController,
+        AddressesController)
 
     consumer
       .apply(admMiddleware)

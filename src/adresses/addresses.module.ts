@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AdressesController } from './adresses.controller';
-import { AdressesService } from './adresses.service';
-import { adressProviders } from './adresses.providers';
+import { AddressesController } from './addresses.controller';
+import { AdressesService } from './addresses.service';
+import { addressProviders } from './addresses.providers';
 import { DatabaseModule } from '../database.module';
 import { GlobalModule } from '../global/global.module';
 
@@ -10,10 +10,10 @@ import { GlobalModule } from '../global/global.module';
     GlobalModule,
     DatabaseModule
   ],
-  controllers: [AdressesController],
+  controllers: [AddressesController],
   providers: [
     AdressesService,
-    ...adressProviders
+    ...addressProviders
   ]
 })
 export class AdressesModule {}

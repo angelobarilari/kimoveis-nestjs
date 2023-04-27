@@ -9,7 +9,7 @@ import { CreatePropertyDto } from './dtos/create-property.dto';
 import { UpdatePropertyDto } from './dtos/update-property.dto';
 import { Property } from './entities/propety.entity';
 import { CategoriesService } from '../categories/categories.service';
-import { AdressesService } from '../adresses/adresses.service';
+import { AdressesService } from '../adresses/addresses.service';
 
 @Injectable()
 export class PropertiesService {
