@@ -12,7 +12,12 @@ import { CategoriesService } from '../categories/categories.service';
 import { AdressesService } from '../adresses/addresses.service';
 
 @Module({
-  imports: [GlobalModule, DatabaseModule, CategoriesModule, AdressesModule],
+  imports: [
+    GlobalModule, 
+    DatabaseModule, 
+    CategoriesModule, 
+    AdressesModule
+  ],
   controllers: [PropertiesController],
   providers: [
     AdressesService,
