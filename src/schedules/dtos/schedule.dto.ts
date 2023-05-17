@@ -11,7 +11,7 @@ import {
 import { Type } from 'class-transformer';
 import { UserDto } from '../../users/dtos/user.dto';
 
-export class CreateScheduleDto {
+export class ScheduleDto {
   @IsUUID()
   readonly id: string;
 

@@ -26,6 +26,13 @@ import { AddressesController } from './adresses/addresses.controller';
 import { SchedulesController } from './schedules/schedules.controller';
 import { SchedulesService } from './schedules/schedules.service';
 import { SchedulesModule } from './schedules/schedules.module';
+import { scheduleProviders } from './schedules/schedules.providers';
+import { propertyProviders } from './properties/properties.providers';
+import { PropertiesService } from './properties/properties.service';
+import { categoryProviders } from './categories/categories.providers';
+import { addressProviders } from './adresses/addresses.providers';
+import { CategoriesService } from './categories/categories.service';
+import { AdressesService } from './adresses/addresses.service';
 
 @Module({
   imports: [
@@ -39,8 +46,22 @@ import { SchedulesModule } from './schedules/schedules.module';
     SchedulesModule,
   ],
   controllers: [AppController, SchedulesController],
-  providers: [AppService, AuthGuard, ...userProviders, SchedulesService],
+  providers: [
+    AppService, 
+    AuthGuard, 
+    SchedulesService,
+    PropertiesService,
+    CategoriesService,
+    AdressesService,
+    ...userProviders, 
+    ...scheduleProviders,
+    ...propertyProviders,
+    ...scheduleProviders,
+    ...categoryProviders,
+    ...addressProviders
+  ],
 })
+
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
