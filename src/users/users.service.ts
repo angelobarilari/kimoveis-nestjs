@@ -1,6 +1,4 @@
-import { 
-    Inject, 
-    Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -9,65 +7,61 @@ import { GlobalService } from '../global/global.service';
 
 @Injectable()
 export class UsersService {
-    constructor(
-        @Inject('USERS_REPOSITORY')
-        private usersRepository: Repository<User>,
-        
-        private globalService: GlobalService
-    ) {}
+  constructor(
+    @Inject('USERS_REPOSITORY')
+    private usersRepository: Repository<User>,
 
-    async getAllUsers(): Promise<User[]> {
-        return await this.usersRepository.find()
-    }
+    private globalService: GlobalService,
+  ) {}
 
-    async findUserById(id: string): Promise<User> {
-        const user: User = await this.usersRepository.findOneBy({ id })
+  async getAllUsers(): Promise<User[]> {
+    return await this.usersRepository.find();
+  }
 
-        if (!user)
-            this.globalService.customException('User not found', 404)
+  async findUserById(id: string): Promise<User> {
+    const user: User = await this.usersRepository.findOneBy({ id });
 
-        return user
-    }
+    if (!user) this.globalService.customException('User not found', 404);
 
-    async findUserByEmail(email: string): Promise<User> {
-        const user: User = await this.usersRepository.findOneBy({ email })
-        
-        if (!user)
-            this.globalService.customException('User not found', 404)
+    return user;
+  }
 
-        return user
-    }
+  async findUserByEmail(email: string): Promise<User> {
+    const user: User = await this.usersRepository.findOneBy({ email });
 
-    async userAlreadyExist(email: string): Promise<boolean> {
-        const user: User = await this.usersRepository.findOneBy({ email })
+    if (!user) this.globalService.customException('User not found', 404);
 
-        if (!user)
-            return false
-        
-        return true
-    }
-    
-    async createUser(data: CreateUserDto): Promise<User> {
-        if (await this.userAlreadyExist(data.email))
-            this.globalService.customException('Email already is in use', 409)
+    return user;
+  }
 
-        const newUser: User = this.usersRepository.create({ ...data })
-        
-        await this.usersRepository.save(newUser)
+  async userAlreadyExist(email: string): Promise<boolean> {
+    const user: User = await this.usersRepository.findOneBy({ email });
 
-        return newUser
-    }
+    if (!user) return false;
 
-    async updateUser(id: string, data: UpdateUserDto): Promise<User> {
-        await this.usersRepository.update(id, data)
-        
-        return this.findUserById(id)
-    }
+    return true;
+  }
 
-    async deleteUser(id: string): Promise<void> {
-        await this.findUserById(id)
+  async createUser(data: CreateUserDto): Promise<User> {
+    if (await this.userAlreadyExist(data.email))
+      this.globalService.customException('Email already is in use', 409);
 
-        this.usersRepository.delete(id)
-    }
+    const newUser: User = this.usersRepository.create({ ...data });
 
+    await this.usersRepository.save(newUser);
+
+    return newUser;
+  }
+
+  async updateUser(id: string, data: UpdateUserDto): Promise<User> {
+    await this.usersRepository.update(id, data);
+
+    return this.findUserById(id);
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    await this.findUserById(id);
+
+    this.usersRepository.delete(id);
+  }
 }

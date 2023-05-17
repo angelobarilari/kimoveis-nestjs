@@ -1,52 +1,42 @@
-import { 
-    Body, 
-    Controller, 
-    Delete, 
-    Get, 
-    Param, 
-    Patch, 
-    Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { PropertiesService } from './properties.service';
 import { CreatePropertyDto } from './dtos/create-property.dto';
 import { UpdatePropertyDto } from './dtos/update-property.dto';
 
 @Controller('properties')
 export class PropertiesController {
-    constructor(
-        private readonly propertiesService: PropertiesService
-    ) {}
+  constructor(private readonly propertiesService: PropertiesService) {}
 
-    @Get()
-    listProperties() {
-        return this.propertiesService.listProperties()
-    }
-    
-    @Get(':id')
-    getPropertyById(
-        @Param() params: any
-    ) {
-        return this.propertiesService.findPropertyById(params.id)
-    }
+  @Get()
+  listProperties() {
+    return this.propertiesService.listProperties();
+  }
 
-    @Post()
-    createProperty(
-        @Body() body: CreatePropertyDto
-    ) {
-        return this.propertiesService.createProperty(body)
-    }
+  @Get(':id')
+  getPropertyById(@Param() params: any) {
+    return this.propertiesService.findPropertyById(params.id);
+  }
 
-    @Patch(':id')
-    updateProperty(
-        @Param() params: any,
-        @Body() body: UpdatePropertyDto
-    ) {
-        return this.propertiesService.updateProperty(params.id, body)
-    }
+  @Post()
+  createProperty(@Body() body: CreatePropertyDto) {
+    return this.propertiesService.createProperty(body);
+  }
 
-    @Delete(':id')
-    deleteProperty(
-        @Param() params: any
-    ) {
-        return this.propertiesService.deleteProperty(params.id)
-    }
+  @Patch(':id')
+  updateProperty(@Param() params: any, @Body() body: UpdatePropertyDto) {
+    return this.propertiesService.updateProperty(params.id, body);
+  }
+
+  @Delete(':id')
+  deleteProperty(@Param() params: any) {
+    return this.propertiesService.deleteProperty(params.id);
+  }
 }

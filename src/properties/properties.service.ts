@@ -1,6 +1,4 @@
-import { 
-    Inject, 
-    Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Category } from '../categories/entities/category.entity';
 import { Repository } from 'typeorm';
 import { Address } from '../adresses/entities/address.entity';
@@ -13,61 +11,65 @@ import { AdressesService } from '../adresses/addresses.service';
 
 @Injectable()
 export class PropertiesService {
-    constructor(
-        @Inject('CATEGORIES_REPOSITORY')
-        private categoriesRepository: Repository<Category>,
+  constructor(
+    @Inject('CATEGORIES_REPOSITORY')
+    private categoriesRepository: Repository<Category>,
 
-        @Inject('ADRESSES_REPOSITORY')
-        private adressesRepository: Repository<Address>,
+    @Inject('ADRESSES_REPOSITORY')
+    private adressesRepository: Repository<Address>,
 
-        @Inject('PROPERTIES_REPOSITORY')
-        private propertiesRepository: Repository<Property>,
+    @Inject('PROPERTIES_REPOSITORY')
+    private propertiesRepository: Repository<Property>,
 
-        private globalService: GlobalService,
+    private globalService: GlobalService,
 
-        private categoriesService: CategoriesService,
+    private categoriesService: CategoriesService,
 
-        private addressesService: AdressesService
-    ) {}
+    private addressesService: AdressesService,
+  ) {}
 
-    async listProperties(): Promise<Property[]> {
-        return await this.propertiesRepository.find()
-    }
+  async listProperties(): Promise<Property[]> {
+    return await this.propertiesRepository.find();
+  }
 
-    async findPropertyById(id: string): Promise<Property> {
-        const property: Property = await this.propertiesRepository.findOneBy({ id })
+  async findPropertyById(id: string): Promise<Property> {
+    const property: Property = await this.propertiesRepository.findOneBy({
+      id,
+    });
 
-        if (!property)
-            this.globalService.customException('Property not found', 404)
+    if (!property)
+      this.globalService.customException('Property not found', 404);
 
-        return property
-    }
+    return property;
+  }
 
-    async createProperty(data: CreatePropertyDto): Promise<Property> {
-        const category = await this.categoriesService.findCategoryByName(data.categoryName)
+  async createProperty(data: CreatePropertyDto): Promise<Property> {
+    const category = await this.categoriesService.findCategoryByName(
+      data.categoryName,
+    );
 
-        const address = await this.addressesService.createAddress(data.address)
+    const address = await this.addressesService.createAddress(data.address);
 
-        const newProperty: Property = this.propertiesRepository.create({
-            ...data,
-            address,
-            category
-        })
+    const newProperty: Property = this.propertiesRepository.create({
+      ...data,
+      address,
+      category,
+    });
 
-        await this.propertiesRepository.save(newProperty)
+    await this.propertiesRepository.save(newProperty);
 
-        return newProperty
-    }
+    return newProperty;
+  }
 
-    async updateProperty(id: string, data: UpdatePropertyDto): Promise<Property> {
-        await this.propertiesRepository.update(id, data)
+  async updateProperty(id: string, data: UpdatePropertyDto): Promise<Property> {
+    await this.propertiesRepository.update(id, data);
 
-        return await this.findPropertyById(id)
-    }
+    return await this.findPropertyById(id);
+  }
 
-    async deleteProperty(id: string): Promise<void> {
-        await this.findPropertyById(id)
+  async deleteProperty(id: string): Promise<void> {
+    await this.findPropertyById(id);
 
-        this.propertiesRepository.delete(id)
-    }
+    this.propertiesRepository.delete(id);
+  }
 }

@@ -6,14 +6,8 @@ import { DatabaseModule } from '../database.module';
 import { GlobalModule } from '../global/global.module';
 
 @Module({
-  imports: [
-    GlobalModule,
-    DatabaseModule
-  ],
+  imports: [GlobalModule, DatabaseModule],
   controllers: [AddressesController],
-  providers: [
-    AdressesService,
-    ...addressProviders
-  ]
+  providers: [AdressesService, ...addressProviders],
 })
 export class AdressesModule {}

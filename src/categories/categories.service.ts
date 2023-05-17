@@ -7,69 +7,71 @@ import { UpdateCategoryDto } from './dtos/update-category.dto';
 
 @Injectable()
 export class CategoriesService {
-    constructor(
-        @Inject('CATEGORIES_REPOSITORY')
-        private categoriesRepository: Repository<Category>,
+  constructor(
+    @Inject('CATEGORIES_REPOSITORY')
+    private categoriesRepository: Repository<Category>,
 
-        private globalService: GlobalService
-    ) {}
+    private globalService: GlobalService,
+  ) {}
 
-    async listCategories(): Promise<Category[]> {
-        return await this.categoriesRepository.find()
-    }
+  async listCategories(): Promise<Category[]> {
+    return await this.categoriesRepository.find();
+  }
 
-    async findCategoryById(id: string): Promise<Category> {
-        const category: Category = await this.categoriesRepository.findOneBy({ id }) 
-        
-        if (!category)
-            this.globalService.customException('Category not found', 404)
+  async findCategoryById(id: string): Promise<Category> {
+    const category: Category = await this.categoriesRepository.findOneBy({
+      id,
+    });
 
-        return category
-    }
+    if (!category)
+      this.globalService.customException('Category not found', 404);
 
-    async findCategoryByName(name: string): Promise<Category> {
-        const category: Category = await this.categoriesRepository.findOneBy({ name })
+    return category;
+  }
 
-        if (!category)
-            this.globalService.customException('Category not found', 404)
+  async findCategoryByName(name: string): Promise<Category> {
+    const category: Category = await this.categoriesRepository.findOneBy({
+      name,
+    });
 
-        return category
-    }
+    if (!category)
+      this.globalService.customException('Category not found', 404);
 
-    async categoryAlreadyExist(categoryName: string): Promise<boolean> {
-        const category: Category = await this.categoriesRepository.findOneBy({
-            name: categoryName
-        })
+    return category;
+  }
 
-        if (!category)
-            return false
-        
-        return true
-    }
+  async categoryAlreadyExist(categoryName: string): Promise<boolean> {
+    const category: Category = await this.categoriesRepository.findOneBy({
+      name: categoryName,
+    });
 
-    async createCategory(data: CreateCategoryDto): Promise<Category> {
-        if (await this.categoryAlreadyExist(data.name))
-            this.globalService.customException('Category already exists', 409)
+    if (!category) return false;
 
-        const newCategory: Category = this.categoriesRepository.create({ ...data })
+    return true;
+  }
 
-        await this.categoriesRepository.save(newCategory)
+  async createCategory(data: CreateCategoryDto): Promise<Category> {
+    if (await this.categoryAlreadyExist(data.name))
+      this.globalService.customException('Category already exists', 409);
 
-        return newCategory
-    }
+    const newCategory: Category = this.categoriesRepository.create({ ...data });
 
-    async updateCategory(id: string, data: UpdateCategoryDto): Promise<Category> {
-        await this.categoriesRepository.update(id, data)
+    await this.categoriesRepository.save(newCategory);
 
-        return this.findCategoryById(id)
-    }
+    return newCategory;
+  }
 
-    async deleteCategory(id: string) {
-        await this.findCategoryById(id)
+  async updateCategory(id: string, data: UpdateCategoryDto): Promise<Category> {
+    await this.categoriesRepository.update(id, data);
 
-        await this.categoriesRepository.delete(id)
-    }
+    return this.findCategoryById(id);
+  }
 
-    async listPropertiesByCategory () {}
+  async deleteCategory(id: string) {
+    await this.findCategoryById(id);
 
+    await this.categoriesRepository.delete(id);
+  }
+
+  async listPropertiesByCategory() {}
 }

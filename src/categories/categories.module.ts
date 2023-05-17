@@ -8,16 +8,8 @@ import { AdressesModule } from '../adresses/addresses.module';
 import { addressProviders } from '../adresses/addresses.providers';
 
 @Module({
-  imports: [
-    GlobalModule,
-    DatabaseModule,
-    AdressesModule
-  ],
+  imports: [GlobalModule, DatabaseModule, AdressesModule],
   controllers: [CategoriesController],
-  providers: [
-    CategoriesService,
-    ...categoryProviders,
-    ...addressProviders
-  ]
+  providers: [CategoriesService, ...categoryProviders, ...addressProviders],
 })
 export class CategoriesModule {}

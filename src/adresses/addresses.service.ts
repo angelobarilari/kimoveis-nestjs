@@ -6,34 +6,33 @@ import { CreateAddressDto } from './dtos/create-address.dto';
 
 @Injectable()
 export class AdressesService {
-    constructor(
-        @Inject('ADRESSES_REPOSITORY')
-        private adressesRepository: Repository<Address>,
-        
-        private globalService: GlobalService
-    ) {}
+  constructor(
+    @Inject('ADRESSES_REPOSITORY')
+    private adressesRepository: Repository<Address>,
 
-    async createAddress(data: CreateAddressDto): Promise<Address> {
-        const { city, district, number, state, zipCode } = data
+    private globalService: GlobalService,
+  ) {}
 
-        const addressAlreadyExist = await this.adressesRepository.findOneOrFail({
-            where: {
-                city,
-                district,
-                number,
-                state,
-                zipCode
-            }
-        })
+  async createAddress(data: CreateAddressDto): Promise<Address> {
+    const { city, district, number, state, zipCode } = data;
 
-        if (addressAlreadyExist)
-            this.globalService.customException('Address already registered', 409)
+    const addressAlreadyExist = await this.adressesRepository.findOneOrFail({
+      where: {
+        city,
+        district,
+        number,
+        state,
+        zipCode,
+      },
+    });
 
-        const newAddress: Address = this.adressesRepository.create(data)
+    if (addressAlreadyExist)
+      this.globalService.customException('Address already registered', 409);
 
-        await this.adressesRepository.save(newAddress)
+    const newAddress: Address = this.adressesRepository.create(data);
 
-        return newAddress
-    }
+    await this.adressesRepository.save(newAddress);
 
+    return newAddress;
+  }
 }
