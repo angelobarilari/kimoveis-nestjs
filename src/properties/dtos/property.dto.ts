@@ -5,12 +5,16 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
   ValidateNested,
 } from 'class-validator';
-import { Type } from 'class-transformer';
 import { AddressDto } from '../../adresses/dtos/address.dto';
+import { Type } from 'class-transformer';
 
-export class CreatePropertyDto {
+export class PropertyDto {
+  @IsUUID()
+  readonly id: string;
+
   @IsBoolean()
   readonly sold: boolean;
 

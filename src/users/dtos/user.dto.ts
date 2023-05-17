@@ -3,10 +3,14 @@ import {
   IsEmail,
   IsOptional,
   IsString,
+  IsUUID,
   MaxLength,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class UserDto {
+  @IsUUID()
+  readonly id: string;
+
   @IsString()
   @MaxLength(150)
   readonly name: string;

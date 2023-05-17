@@ -1,6 +1,15 @@
-import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
-export class CreateAddressDto {
+export class AddressDto {
+  @IsUUID()
+  readonly id: string;
+
   @IsString()
   @MaxLength(100)
   readonly district: string;

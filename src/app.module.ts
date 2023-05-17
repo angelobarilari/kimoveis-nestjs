@@ -1,8 +1,9 @@
-import { 
-  MiddlewareConsumer, 
-  Module, 
-  NestModule, 
-  RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -22,52 +23,47 @@ import { PropertiesModule } from './properties/properties.module';
 import { CategoriesController } from './categories/categories.controller';
 import { PropertiesController } from './properties/properties.controller';
 import { AddressesController } from './adresses/addresses.controller';
+import { SchedulesController } from './schedules/schedules.controller';
+import { SchedulesService } from './schedules/schedules.service';
+import { SchedulesModule } from './schedules/schedules.module';
 
 @Module({
   imports: [
-    UsersModule, 
-    AuthModule, 
-    DatabaseModule, 
-    GlobalModule, 
-    CategoriesModule, 
-    AdressesModule, 
-    PropertiesModule
+    UsersModule,
+    AuthModule,
+    DatabaseModule,
+    GlobalModule,
+    CategoriesModule,
+    AdressesModule,
+    PropertiesModule,
+    SchedulesModule,
   ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    AuthGuard,
-    ...userProviders,
-  ],
+  controllers: [AppController, SchedulesController],
+  providers: [AppService, AuthGuard, ...userProviders, SchedulesService],
 })
-
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(activeMiddlewareAuth)
-      .exclude(
-        { path: 'users', method: RequestMethod.POST },
-        'users/(.*)',
-      )
+      .exclude({ path: 'users', method: RequestMethod.POST }, 'users/(.*)')
       .forRoutes(
-        UsersController, 
+        UsersController,
         AuthController,
         CategoriesController,
         PropertiesController,
-        AddressesController)
+        AddressesController,
+      );
 
     consumer
       .apply(admMiddleware)
-      .forRoutes(
-        { path: 'users', method: RequestMethod.GET }
-      )
-    
+      .forRoutes({ path: 'users', method: RequestMethod.GET });
+
     consumer
       .apply(ownerOrAdmMiddleware)
       .forRoutes(
         { path: 'users/:id', method: RequestMethod.GET },
         { path: 'users/:id', method: RequestMethod.PATCH },
         { path: 'users/:id', method: RequestMethod.DELETE },
-      )
+      );
   }
 }

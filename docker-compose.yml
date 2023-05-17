@@ -9,18 +9,18 @@ services:
       - "3000:3000"
     volumes:
       - .:/home/node/app
-    # depends_on:
-    #   - db
+    depends_on:
+      - db
 
-  # db:
-  #   build: .docker/postgres
-  #   container_name: kimoveis-db
-  #   restart: always
-  #   tty: true
-  #   ports:
-  #     - "5432:5432"
-  #   volumes:
-  #     - .docker/dbdata:/var/lib/postgresql/data
-  #   environment:
-  #     - POSTGRES_PASSWORD=1234
-  #     - POSTGRES_DB=kimoveisdb
+  db:
+    build: .docker/postgres
+    container_name: kimoveis-db
+    restart: always
+    tty: true
+    ports:
+      - "5432:5432"
+    volumes:
+      - .docker/dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=kimoveisdb

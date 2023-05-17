@@ -1,60 +1,62 @@
-import { Entity, 
-    Column, 
-    CreateDateColumn, 
-    UpdateDateColumn, 
-    PrimaryGeneratedColumn, 
-    OneToMany,
-    OneToOne,
-    JoinColumn,
-    ManyToOne} from "typeorm";
-import { Address } from "../../adresses/entities/address.entity";
-import { Category } from "../../categories/entities/category.entity";
-// import { SchedulesUserProperties } from "./schedules_users_properties";
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
+import { Address } from '../../adresses/entities/address.entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Schedule } from '../../schedules/entities/schedule.entity';
 
-@Entity("properties")
+@Entity('properties')
 class Property {
-    @PrimaryGeneratedColumn("uuid")
-    readonly id: string;
+  @PrimaryGeneratedColumn('uuid')
+  readonly id: string;
 
-    @Column({ 
-        default: false 
-    })
-    sold: boolean;
+  @Column({
+    default: false,
+  })
+  sold: boolean;
 
-    @Column({ 
-        type: "decimal", 
-        precision: 10, 
-        scale: 2, 
-        default: 0 
-    })
-    value: number;
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+    default: 0,
+  })
+  value: number;
 
-    @Column({ 
-        type: "integer" 
-    })
-    size: number
+  @Column({
+    type: 'integer',
+  })
+  size: number;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-    // @OneToMany(() => SchedulesUserProperties, SchedulesUserProperties => SchedulesUserProperties.property)
-    // schedules: SchedulesUserProperties[]
+  @OneToMany(() => Schedule, (Schedule) => Schedule.property)
+  schedules: Schedule[];
 
-    @OneToOne(() => Address, { 
-        eager: true, 
-        onDelete: "CASCADE" 
-    }) 
-    @JoinColumn()
-    address: Address
+  @OneToOne(() => Address, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn()
+  address: Address;
 
-    @ManyToOne(() => Category, { 
-        eager: true, 
-        nullable: true 
-    })
-    category: Category
+  @ManyToOne(() => Category, {
+    eager: true,
+    nullable: true,
+  })
+  category: Category;
 }
 
-export { Property } 
+export { Property };

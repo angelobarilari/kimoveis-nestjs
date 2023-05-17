@@ -20,11 +20,7 @@ import { GlobalModule } from '../global/global.module';
       signOptions: { expiresIn: '24h' },
     }),
   ],
-  providers: [
-    AuthService, 
-    LocalStrategy, 
-    JwtStrategy
-  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })
